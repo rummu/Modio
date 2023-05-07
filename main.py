@@ -17,14 +17,14 @@ def gen(camera):
     while True:
         global emotion
         frame,emotion = camera.get_frame()
-        # print(emotion)
+        # print(frame)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
+
 @app.route('/video_feed')
 def video_feed():
-    # x,emotion=VideoCamera() 
-    # print(emotion)
+
     return Response(gen(VideoCamera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
     # return Response(gen(x),
@@ -35,6 +35,7 @@ def get_emotion():
     data={
         "Emotion":emotion
     }
+    print(data)
     return jsonify(data)
 
 
